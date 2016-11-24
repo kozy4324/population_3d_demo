@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body style='margin: 0;'>
+<div id='map' style='width: 100%; position: absolute; top: 0; bottom: 0;'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoiay1uYWthbXVyYSIsImEiOiJjaXVqZWd6OTMwMGhjMnlxaXZrcGhzczJtIn0.LQwDcl6aZFQRx8dPfneFHQ';
+var map = new mapboxgl.Map({
+    container: 'map',
+    center: [135, 35],
+    zoom: 6,
+    pitch: 60,
+    style: 'mapbox://styles/mapbox/streets-v9'
+});
+map.on('load', function() {
+    map.addSource("populations", {
+        'type': 'geojson',
+        'data': './japan_with_populations.geojson?_=' + Date.now()
+    });
+    map.addLayer({
+        'id': 'population-extrusion',
+        'type': 'fill-extrusion',
+        'source': 'populations',
+        'paint': {
+            'fill-extrusion-color': {
+                'property': 'color', 
+                'type': 'identity'
+            },
+            'fill-extrusion-height': {
+                'property': 'population_height',
+                'type': 'identity'
+            },
+            'fill-extrusion-opacity': 0.8
+        }
+    });
+});
+</script>
+</body>
+</html>
