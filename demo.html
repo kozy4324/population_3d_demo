@@ -37,6 +37,14 @@ map.on('load', function() {
         }
     });
 });
+map.on('data', function(event) {
+    if (event.dataType == 'source' && event.source.id == 'populations') {
+        var attrib = document.querySelector(".mapboxgl-ctrl-attrib");
+        attrib.innerHTML = attrib.innerHTML +
+            ' | <a href="http://www.e-stat.go.jp/" target="_blank">政府統計の総合窓口(e-Stat)</a>' +
+            ' | <a href="http://www.naturalearthdata.com/" target="_blank">Made with Natural Earth.</a>';
+    }
+});
 </script>
 </body>
 </html>
